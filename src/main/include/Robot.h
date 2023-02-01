@@ -55,6 +55,7 @@ class Robot : public frc::TimedRobot {
   void R2Jesu_AutonomousShootGetOut(void);
   void R2Jesu_AutonomousSelfish(void);
   void R2Jesu_AutonomousGRC(void);
+  void R2Jesu_SwitchAuto(void);
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoOriginal = "Original Auto";
   const std::string kAutoGetOut = "Get Out";
@@ -62,6 +63,7 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoWaitGetOut = "Wait and Get Out";
   const std::string kAutoSelfish = "Selfish Auto";
   const std::string kAutoGRC = "GRC Auto";
+  const std::string kSwitchAuto = "Switch Auto";
   std::string m_autoSelected;
   frc::Compressor compressorObject{frc::PneumaticsModuleType::CTREPCM};
   
@@ -103,7 +105,7 @@ class Robot : public frc::TimedRobot {
   double inputAngle = 0.0;
   double r = 0.0;
   double newX = 0.0, newY = 0.0;
-  double fieldOrientedAngle;
+  double fieldOrientedAngle = 0.0;
   double correctionPID;
   double LENGTH = 17.375;
   double WIDTH = 21.25;
@@ -123,14 +125,19 @@ class Robot : public frc::TimedRobot {
   double Ppid = 0.050;//45;
   double Ipid = 0.000;
   double Dpid = 0.001;//0.0008;//.0005
+  double switchPpid = 0.025;
+  double switchIpid = 0.0;
+  double switchDpid = 0.0;
   double pidOutput1 = 0.0;
   double pidOutput2 = 0.0;
   double pidOutput3 = 0.0;
   double pidOutput4 = 0.0;
+  double switchPidOutput = 0.0;
   frc2::PIDController m_angleController1{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController2{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController3{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController4{ Ppid , Ipid, Dpid, 20_ms};
+  frc2::PIDController m_switchController{ switchPpid, switchIpid, switchDpid, 20_ms};
   double fullSpeed = .3;
   double turnSpeed = .2;
   double speedChoice;

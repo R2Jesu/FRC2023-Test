@@ -12,6 +12,7 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoShootGetOut, kAutoShootGetOut);
   m_chooser.AddOption(kAutoSelfish, kAutoSelfish);
   m_chooser.AddOption(kAutoGRC, kAutoGRC);
+  m_chooser.AddOption(kSwitchAuto, kSwitchAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_angleController1.EnableContinuousInput(0.00, 360.00);
@@ -200,6 +201,10 @@ void Robot::AutonomousInit() {
   else if (m_autoSelected == kAutoGRC)
   {
     R2Jesu_AutonomousGRC();
+  }
+  else if (m_autoSelected == kSwitchAuto)
+  {
+    R2Jesu_SwitchAuto();
   }
   else
   {
