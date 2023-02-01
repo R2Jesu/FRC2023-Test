@@ -178,7 +178,7 @@ void Robot::AutonomousInit() {
   m_SwerveDrive2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive4.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-  if (m_autoSelected == kAutoOriginal)
+/*   if (m_autoSelected == kAutoOriginal)
   {
     R2Jesu_Autonomous();
   }
@@ -205,16 +205,16 @@ void Robot::AutonomousInit() {
   else if (m_autoSelected == kSwitchAuto)
   {
     R2Jesu_SwitchAuto();
-  }
+  } 
   else
   {
     R2Jesu_Autonomous();
-  }
+  } */
   
 }
 
 void Robot::AutonomousPeriodic() {
-
+  R2Jesu_SwitchAuto();
 }
 
 void Robot::TeleopInit() 
