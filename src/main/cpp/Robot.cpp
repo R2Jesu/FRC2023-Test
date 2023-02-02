@@ -157,6 +157,7 @@ if (m_Operatorstick.GetRightY() > 0.0)
  */
 void Robot::AutonomousInit() {
 
+  ahrs->ResetDisplacement();
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);

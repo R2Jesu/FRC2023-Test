@@ -8,8 +8,9 @@ void Robot::R2Jesu_SwitchAuto(void)
     m_DriveEncoder3.SetPosition(0.0);
     m_DriveEncoder4.SetPosition(0.0);
     frc::SmartDashboard::PutNumber("position",0.0);
-    while (m_DriveEncoder1.GetPosition() < 60.0 && frc::DriverStation::IsAutonomousEnabled())
+    while (ahrs->GetDisplacementX() > -1.25 && frc::DriverStation::IsAutonomousEnabled())
     {
+        printf("In the while loop\n");
         m_SwerveDrive1.Set(0.4);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), 90.0);
         m_SwerveTurn1.Set(pidOutput1);
@@ -26,6 +27,8 @@ void Robot::R2Jesu_SwitchAuto(void)
         pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion4), 90.0);
         m_SwerveTurn4.Set(pidOutput4);
         frc::SmartDashboard::PutNumber("position", m_DriveEncoder1.GetPosition());
+        frc::SmartDashboard::PutNumber("displacement x", ahrs->GetDisplacementX());
+        frc::SmartDashboard::PutNumber("displacement y", ahrs->GetDisplacementY());
     }
     m_SwerveDrive1.Set(0.0);
     m_SwerveDrive2.Set(0.0);
@@ -37,7 +40,7 @@ void Robot::R2Jesu_SwitchAuto(void)
     m_SwerveTurn4.Set(0.0);
     frc::SmartDashboard::PutNumber("position2",0.0);
 
-    while (m_DriveEncoder1.GetPosition() < 35.0 && frc::DriverStation::IsAutonomousEnabled())
+    /*while (m_DriveEncoder1.GetPosition() < 35.0 && frc::DriverStation::IsAutonomousEnabled())
     {
         m_SwerveDrive1.Set(0.2);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), 90.0);
@@ -55,7 +58,7 @@ void Robot::R2Jesu_SwitchAuto(void)
         pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion4), 90.0);
         m_SwerveTurn4.Set(pidOutput4);
         frc::SmartDashboard::PutNumber("position2", m_DriveEncoder1.GetPosition());
-    }
+    }*/
     m_SwerveDrive1.Set(0.0);
     m_SwerveDrive2.Set(0.0);
     m_SwerveDrive3.Set(0.0);
@@ -64,7 +67,7 @@ void Robot::R2Jesu_SwitchAuto(void)
     m_SwerveTurn2.Set(0.0);
     m_SwerveTurn3.Set(0.0);
     m_SwerveTurn4.Set(0.0);
-    if ((ahrs->GetPitch() >= 5.0 || ahrs->GetPitch() <= -5.0) && frc::DriverStation::IsAutonomousEnabled())
+   if ((ahrs->GetPitch() >= 5.0 || ahrs->GetPitch() <= -5.0) && frc::DriverStation::IsAutonomousEnabled())
     {
         if (ahrs->GetPitch() > 0.0)
         {
@@ -72,11 +75,13 @@ void Robot::R2Jesu_SwitchAuto(void)
         }
         else
         {
-            balanceDirection = 270.0;
+            balanceDirection = 90.0;
         }
         frc::SmartDashboard::PutNumber("Pitch", ahrs->GetPitch());
-        frc::SmartDashboard::PutNumber("switch pid", switchPidOutput);
+        printf("Pitch %d\n",ahrs->GetPitch());
         switchPidOutput = m_switchController.Calculate((ahrs->GetPitch()), 0.0);
+        frc::SmartDashboard::PutNumber("switch pid", switchPidOutput);
+        printf("switch pid %d\n", switchPidOutput);
         m_SwerveDrive1.Set(switchPidOutput);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), balanceDirection);
         m_SwerveTurn1.Set(pidOutput1);
@@ -114,6 +119,6 @@ void Robot::R2Jesu_SwitchAuto(void)
         m_SwerveTurn3.Set(pidOutput3);
         pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion4), 135.0);
         m_SwerveTurn4.Set(pidOutput4);
-    }
+    } 
 
-}
+} 

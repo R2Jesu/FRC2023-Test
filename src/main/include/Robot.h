@@ -125,7 +125,7 @@ class Robot : public frc::TimedRobot {
   double Ppid = 0.050;//45;
   double Ipid = 0.000;
   double Dpid = 0.001;//0.0008;//.0005
-  double switchPpid = 0.025;
+  double switchPpid = 0.010;//maura we added a zero 0.025
   double switchIpid = 0.0;
   double switchDpid = 0.0;
   double pidOutput1 = 0.0;
@@ -137,7 +137,7 @@ class Robot : public frc::TimedRobot {
   frc2::PIDController m_angleController2{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController3{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController4{ Ppid , Ipid, Dpid, 20_ms};
-  frc2::PIDController m_switchController{ switchPpid, switchIpid, switchDpid, 20_ms};
+  frc2::PIDController m_switchController{ switchPpid, switchIpid, switchDpid, 50_ms};
   double fullSpeed = .3;
   double turnSpeed = .2;
   double speedChoice;
