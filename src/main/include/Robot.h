@@ -179,4 +179,5 @@ class Robot : public frc::TimedRobot {
   //NavX
   AHRS *ahrs;
   
+  bool hasRun = false;
 };
