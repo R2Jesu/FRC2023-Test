@@ -5,6 +5,8 @@
 
 void Robot::RobotInit() {
   ahrs = new AHRS(frc::SPI::Port::kMXP);
+  std::thread visionThread(VisionThread);
+  visionThread.detach();
 
   m_chooser.SetDefaultOption(kAutoOriginal, kAutoOriginal);
   m_chooser.AddOption(kAutoGetOut, kAutoGetOut);
@@ -12,6 +14,7 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoShootGetOut, kAutoShootGetOut);
   m_chooser.AddOption(kAutoSelfish, kAutoSelfish);
   m_chooser.AddOption(kAutoGRC, kAutoGRC);
+  m_chooser.AddOption(kSwitchAuto, kSwitchAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_angleController1.EnableContinuousInput(0.00, 360.00);
@@ -156,6 +159,8 @@ if (m_Operatorstick.GetRightY() > 0.0)
  */
 void Robot::AutonomousInit() {
 
+  ahrs->ResetDisplacement();
+  hasRun = false;
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);
@@ -177,7 +182,7 @@ void Robot::AutonomousInit() {
   m_SwerveDrive2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive4.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-  if (m_autoSelected == kAutoOriginal)
+/*   if (m_autoSelected == kAutoOriginal)
   {
     R2Jesu_Autonomous();
   }
@@ -201,15 +206,19 @@ void Robot::AutonomousInit() {
   {
     R2Jesu_AutonomousGRC();
   }
+  else if (m_autoSelected == kSwitchAuto)
+  {
+    R2Jesu_SwitchAuto();
+  } 
   else
   {
     R2Jesu_Autonomous();
-  }
+  } */
   
 }
 
 void Robot::AutonomousPeriodic() {
-
+  R2Jesu_SwitchAuto();
 }
 
 void Robot::TeleopInit() 
