@@ -68,7 +68,7 @@ void Robot::R2Jesu_SwitchAuto(void)
     m_SwerveTurn2.Set(0.0);
     m_SwerveTurn3.Set(0.0);
     m_SwerveTurn4.Set(0.0);
-    if ((ahrs->GetPitch() >= 5.0 || ahrs->GetPitch() <= -5.0) && frc::DriverStation::IsAutonomousEnabled())
+    if ((ahrs->GetPitch() >= 10.0 || ahrs->GetPitch() <= -10.0) && frc::DriverStation::IsAutonomousEnabled())
     {
         balanceDirection = 90.0;
         frc::SmartDashboard::PutNumber("Pitch", ahrs->GetPitch());

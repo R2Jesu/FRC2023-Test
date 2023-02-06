@@ -5,6 +5,8 @@
 
 void Robot::RobotInit() {
   ahrs = new AHRS(frc::SPI::Port::kMXP);
+  std::thread visionThread(VisionThread);
+  visionThread.detach();
 
   m_chooser.SetDefaultOption(kAutoOriginal, kAutoOriginal);
   m_chooser.AddOption(kAutoGetOut, kAutoGetOut);
